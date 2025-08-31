@@ -5,22 +5,26 @@ export const beforeBedQuestions: FormQuestion[] = [
     id: 1,
     text: 'Did you drink caffeine today?',
     format: QuestionFormat.TrueFalse,
-    required: false,
-  },
-  {
-    id: 1,
-    text: '# of Caffeinated Drinks',
-    format: QuestionFormat.Number,
-    required: false,
+    required: true,
   },
   {
     id: 2,
-    text: 'Any concerning food?',
-    format: QuestionFormat.Text,
+    text: '# of Caffeinated Drinks',
+    format: QuestionFormat.Number,
     required: false,
+    dependancy: {
+      questionId: 2,
+      value: true,
+    },
   },
   {
     id: 3,
+    text: 'Any concerning food?',
+    format: QuestionFormat.Text,
+    required: true,
+  },
+  {
+    id: 4,
     text: 'Any naps?',
     format: QuestionFormat.TrueFalse, // Could also be custom if you want structured input
     required: false,
@@ -31,7 +35,7 @@ export const beforeBedQuestions: FormQuestion[] = [
     format: QuestionFormat.Number,
     required: false,
     dependancy: {
-      questionId: 3,
+      questionId: 4,
       value: true,
     },
   },
@@ -39,13 +43,13 @@ export const beforeBedQuestions: FormQuestion[] = [
     id: 6,
     text: 'Did you exercise today?',
     format: QuestionFormat.TrueFalse, // same note as above
-    required: false,
+    required: true,
   },
   {
     id: 7,
     text: "How long?",
     format: QuestionFormat.Number,
-    required: false,
+    required: true,
     dependancy: {
       questionId: 6,
       value: true,
@@ -61,7 +65,7 @@ export const beforeBedQuestions: FormQuestion[] = [
     id: 9,
     text: 'Any Changes Made?',
     format: QuestionFormat.Text,
-    required: false,
+    required: true,
   },
 ];
 

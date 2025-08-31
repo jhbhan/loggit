@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import React, { useState } from 'react';
+import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -8,13 +8,12 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useLogContext } from '@/hooks/LogContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
+import { StepForm } from '@jhbhan/rn-form';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { showForm, closeForm, currentForm } = useLogContext();
+  const { showForm, closeForm, currentForm, answers, setAnswer } = useLogContext();
   const questions = currentForm?.questionSet;
-  const [answers, setAnswers] = useState({});
   return (
     <>
       <Tabs
@@ -54,13 +53,11 @@ export default function TabLayout() {
         />
       </Tabs>
       {
-        showForm && questions && (
+        showForm && questions && answers && (
           <StepForm
             questions={questions} 
             answers={answers}  
-            onAnswerChange={function (questionId: number, answer: FormAnswerType): void {
-              setAnswers({ ...answers, [questionId]: answer });
-            }}
+            onAnswerChange={setAnswer}
             onFormComplete={function (): void {
               closeForm();
             }}
