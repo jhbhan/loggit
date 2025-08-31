@@ -19,6 +19,8 @@ export const Colors = {
     border: '#E6E2DD',
     success: '#B4E0C5',
     danger: '#F7B2B7',
+    primaryButton: '#A8D5BA',
+    secondaryButton: '#F9DCC4'
   },
   dark: {
     text: '#FFFFFF', // fallback brighter text
@@ -32,5 +34,7 @@ export const Colors = {
     border: '#7B7B7B',
     success: '#B4E0C5',
     danger: '#F7B2B7',
+    primaryButton: '#A8D5BA',
+    secondaryButton: '#F9DCC4'
   },
 };

@@ -6,7 +6,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
-import { sampleQuestions } from '@/constants/sampleQuestions';
+import { morningQuestions } from '@/constants/sampleQuestions';
 import { useLogContext } from '@/hooks/LogContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
@@ -14,7 +14,7 @@ import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { showForm, setShowForm } = useLogContext();
-  const questions = sampleQuestions;
+  const questions = morningQuestions;
   const [answers, setAnswers] = useState({});
   return (
     <>
