@@ -6,15 +6,14 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
-import { morningQuestions } from '@/constants/sampleQuestions';
 import { useLogContext } from '@/hooks/LogContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { showForm, setShowForm } = useLogContext();
-  const questions = morningQuestions;
+  const { showForm, closeForm, currentForm } = useLogContext();
+  const questions = currentForm?.questionSet;
   const [answers, setAnswers] = useState({});
   return (
     <>
@@ -55,7 +54,7 @@ export default function TabLayout() {
         />
       </Tabs>
       {
-        showForm && (
+        showForm && questions && (
           <StepForm
             questions={questions} 
             answers={answers}  
@@ -63,9 +62,9 @@ export default function TabLayout() {
               setAnswers({ ...answers, [questionId]: answer });
             }}
             onFormComplete={function (): void {
-              setShowForm(false);
+              closeForm();
             }}
-            closeForm={() => setShowForm(false)}
+            closeForm={closeForm}
           />
         )
       }

@@ -6,7 +6,7 @@ import { useLogContext } from '@/hooks/LogContext';
 import React from 'react';
 
 export default function HomeScreen() {
-  const { setShowForm } = useLogContext();
+  const { selectForm } = useLogContext();
   return (
     <ThemedView 
       style={themedStyles.centeredContainer}
@@ -17,7 +17,7 @@ export default function HomeScreen() {
           Welcome to Loggit!
         </ThemedText>
         <ThemedButton
-          onPress={() => setShowForm(true)}
+          onPress={() => selectForm(2)}
           text='Get Started'
         />
     </ThemedView>
