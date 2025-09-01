@@ -1,5 +1,5 @@
 
-import { ThemedButton } from '@/components/ThemedButton';
+import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView, themedStyles } from '@/components/ThemedView';
 import { useLogContext } from '@/hooks/LogContext';
@@ -16,7 +16,7 @@ export default function HomeScreen() {
         >
           Welcome to Loggit!
         </ThemedText>
-        <ThemedButton
+        <PrimaryButton
           onPress={() => selectForm(2)}
           text='Get Started'
         />

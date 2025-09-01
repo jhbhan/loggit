@@ -16,7 +16,7 @@ export const Colors = {
     icon: '#7B7B7B',
     tabIconDefault: '#7B7B7B',
     tabIconSelected: '#A8D5BA',
-    border: '#E6E2DD',
+    border: '#7B7B7B',
     success: '#B4E0C5',
     danger: '#F7B2B7',
     primaryButton: '#A8D5BA',

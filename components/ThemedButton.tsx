@@ -6,42 +6,92 @@ import { StyleProps } from 'react-native-reanimated/lib/typescript/commonTypes';
 export type ThemedButtonProps = TouchableOpacityProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'danger';
   buttonStyle?: StyleProps;
   textStyle?: TextStyle;
   text: string
 };
 
-export function ThemedButton({
+export function PrimaryButton({
   buttonStyle,
   textStyle,
   lightColor,
   darkColor,
-  type = 'primary',
   text,
+  style,
   ...rest
 }: ThemedButtonProps) {
   const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
   const primaryButtonColor = useThemeColor({ light: lightColor, dark: darkColor }, 'primaryButton');
+
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        { backgroundColor: primaryButtonColor },
+        buttonStyle,
+        style,
+      ]}
+      {...rest}
+    >
+      <Text style={[styles.default, { color: textColor }, textStyle]}>
+        {text}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+export function SecondaryButton({
+  buttonStyle,
+  textStyle,
+  lightColor,
+  darkColor,
+  text,
+  style,
+  ...rest
+}: ThemedButtonProps) {
+  const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
   const secondaryButtonColor = useThemeColor({ light: lightColor, dark: darkColor }, 'secondaryButton');
 
   return (
-    <TouchableOpacity 
-      style={{
-        ...buttonStyle,
-        ...styles.button,
-        backgroundColor: type === 'primary' ? primaryButtonColor : secondaryButtonColor
-      }}
+    <TouchableOpacity
+      style={[
+        styles.button,
+        { backgroundColor: secondaryButtonColor,
+         },
+        buttonStyle,
+        style,
+      ]}
       {...rest}
     >
-      <Text
-        style={[
-          { color: textColor },
-          type === 'primary' ? styles.default : undefined,
-          type === 'secondary' ? styles.defaultSemiBold : undefined,
-          textStyle,
-        ]}
-      >
+      <Text style={[styles.default, { color: textColor }, textStyle]}>
+        {text}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+export function DangerButton({
+  buttonStyle,
+  textStyle,
+  lightColor,
+  darkColor,
+  text,
+  ...rest
+}: ThemedButtonProps) {
+  const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const dangerButtonColor = useThemeColor({ light: lightColor, dark: darkColor }, 'danger');
+
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        { backgroundColor: dangerButtonColor },
+        buttonStyle,
+      ]}
+      {...rest}
+    >
+      <Text style={[styles.default, { color: textColor }, textStyle]}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -52,6 +102,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 12,
     borderRadius: 8,
+    alignItems: 'center',
   },
   default: {
     fontSize: 16,
