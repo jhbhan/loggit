@@ -6,6 +6,8 @@ import 'react-native-reanimated';
 
 import { LogProvider } from '@/hooks/LogContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { store } from '@/store/store';
+import { Provider } from 'react-redux';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -19,14 +21,16 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <LogProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </LogProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <LogProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </LogProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
