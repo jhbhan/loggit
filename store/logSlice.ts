@@ -1,5 +1,24 @@
+import { beforeBedQuestions, morningQuestions } from '@/constants/sampleQuestions';
 import { LogViewModel, QuestionViewModel } from '@/constants/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+const initialLogs: LogViewModel[] = [
+    {
+        id: 1,
+        name: 'Before Bed Routine',
+        questionSet: beforeBedQuestions,
+    },
+    {
+        id: 2,
+        name: 'Morning Routine',
+        questionSet: morningQuestions
+    }
+];
+
+const questions: QuestionViewModel[] = [
+    ...beforeBedQuestions,
+    ...morningQuestions
+];
 
 interface LogState {
     logs: LogViewModel[];
@@ -7,8 +26,8 @@ interface LogState {
 }
 
 const initialState: LogState = {
-    logs: [],
-    questions: [],
+    logs: initialLogs,
+    questions: questions,
 };
 
 const logSlice = createSlice({

@@ -13,7 +13,7 @@ interface NavHeaderProps {
 
 export default function NavHeader({ showTitle = true, title, showBackButton }: NavHeaderProps) {
     return (
-        <ThemedView style={{alignItems: 'center', justifyContent: 'center'}}>
+        <ThemedView style={{alignItems: 'center', justifyContent: 'center', marginVertical: 10}}>
             {showBackButton && (
                 <TouchableOpacity onPress={() => {router.back()}} style={{position: 'absolute', left: 10}}>
                     <MaterialIcons name="chevron-left" />
@@ -22,7 +22,6 @@ export default function NavHeader({ showTitle = true, title, showBackButton }: N
             {showTitle && (
                 <ThemedText type='defaultSemiBold'>{title}</ThemedText>
             )}
-
         </ThemedView>
     );
 }

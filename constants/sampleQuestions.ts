@@ -71,31 +71,31 @@ export const beforeBedQuestions: FormQuestion[] = [
 
 export const morningQuestions: FormQuestion[] = [
   {
-    id: 1,
+    id: 10,
     text: 'Time Went to Bed',
     format: QuestionFormat.Text, // or define QuestionFormat.Time if you want structured
     required: false,
   },
   {
-    id: 2,
+    id: 11,
     text: 'Time Got out of Bed',
     format: QuestionFormat.Text, // same note as above
     required: false,
   },
   {
-    id: 3,
+    id: 12,
     text: 'Hours Spent in Bed Last Night',
     format: QuestionFormat.Number,
     required: false,
   },
   {
-    id: 4,
+    id: 13,
     text: 'How Long it Took to Fall Asleep',
     format: QuestionFormat.Number, // minutes
     required: false,
   },
   {
-    id: 5,
+    id: 14,
     text: 'Level of Alertness (1-5)',
     format: QuestionFormat.Rating,
     required: false,

@@ -14,7 +14,6 @@ export interface LogDataModel extends BaseModel {
 
 export interface LogViewModel extends BaseModel {
     questionSet: QuestionViewModel[];
-    answers: QuestionAnswers;
     notificationTime?: Date;
     notificationFrequency?: 'daily' | 'weekly' | 'monthly' | 'custom';
 }

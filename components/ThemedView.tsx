@@ -50,6 +50,6 @@ export const themedStyles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    padding:24
+    paddingHorizontal: 24
   }
 });
