@@ -54,5 +54,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, clearUser, updateUser } = userSlice.actions;
+export const { setUser, clearUser, updateUser, incrementStreak, setCurrency } = userSlice.actions;
 export default userSlice.reducer;
