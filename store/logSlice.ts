@@ -21,11 +21,13 @@ const questions: QuestionViewModel[] = [
 ];
 
 interface LogState {
+    showForm: boolean;
     logs: LogViewModel[];
     questions: QuestionViewModel[];
 }
 
 const initialState: LogState = {
+    showForm: false,
     logs: initialLogs,
     questions: questions,
 };
@@ -67,9 +69,22 @@ const logSlice = createSlice({
             state.logs.forEach(log => {
                 log.questionSet = log.questionSet.filter(question => question.id !== questionId);
             });
+        },
+        setShowForm: (state, action: PayloadAction<boolean>) => {
+            console.log(action.payload);
+            state.showForm = action.payload;
         }
     },
 });
 
-export const { addLog, removeLog, clearLogs, addQuestion, addQuestionToLog, removeQuestionFromLog, removeQuestion } = logSlice.actions;
+export const { 
+    addLog, 
+    removeLog, 
+    clearLogs, 
+    addQuestion, 
+    addQuestionToLog, 
+    removeQuestionFromLog, 
+    removeQuestion, 
+    setShowForm 
+} = logSlice.actions;
 export default logSlice.reducer;

@@ -4,7 +4,6 @@ import { FormAnswerType } from '@jhbhan/rn-form';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 type LogContextType = {
-    showForm: boolean;
     selectForm: (formId: number) => void;
     currentForm: LogViewModel | null;
     closeForm: () => void;
@@ -15,21 +14,18 @@ type LogContextType = {
 const LogContext = createContext<LogContextType | undefined>(undefined);
 
 export const LogProvider = ({ children }: { children: ReactNode }) => {
-    const [showForm, setShowForm] = useState(false);
     const [currentForm, setCurrentForm] = useState<LogViewModel | null>(null);
     const [answers, setAnswers] = useState<Record<number, FormAnswerType>>();
     const [forms, setForms] = useState<Record<number, LogViewModel>>({
         1: {
             id: 1,
             questionSet: morningQuestions,
-            name: 'Form 1',
-            answers: {}
+            name: 'Form 1'
         },
         2: {
             id: 2,
             questionSet: beforeBedQuestions,
-            name: 'Form 2',
-            answers: {}
+            name: 'Form 2'
         }
     });
 
@@ -37,8 +33,6 @@ export const LogProvider = ({ children }: { children: ReactNode }) => {
         const form = forms[formId];
         if (form) {
             setCurrentForm(form);
-            setShowForm(true);
-            setAnswers(form.answers || {});
         }
     };
 
@@ -57,7 +51,6 @@ export const LogProvider = ({ children }: { children: ReactNode }) => {
             }
             return prevForms;
         });
-        setShowForm(false);
         setCurrentForm(null);
     };
 
@@ -70,7 +63,6 @@ export const LogProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const providerValue = {
-        showForm,
         selectForm,
         currentForm,
         closeForm,
