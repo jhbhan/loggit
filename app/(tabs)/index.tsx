@@ -2,17 +2,15 @@
 import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView, themedStyles } from '@/components/ThemedView';
-import { useLogContext } from '@/hooks/LogContext';
-import { setShowForm } from '@/store/formSlice';
+import { selectLogId, setShowForm } from '@/store/formSlice';
 import { useAppDispatch } from '@/store/store';
 import React from 'react';
 
 export default function HomeScreen() {
-  const { selectForm } = useLogContext();
   const dispatch = useAppDispatch();
   const onPressStart = () => {
     dispatch(setShowForm(true));
-    selectForm(2);
+    dispatch(selectLogId(2));
   }
   return (
     <ThemedView 

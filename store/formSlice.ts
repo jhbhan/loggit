@@ -1,17 +1,18 @@
+import { FormAnswerType } from '@jhbhan/rn-form';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FormState {
-    values: Record<string, any>;
-    errors: Record<string, string>;
+    answerValues: Record<string, FormAnswerType>;
     isSubmitting: boolean;
     showForm: boolean;
+    selectLogId: number | null;
 }
 
 const initialState: FormState = {
-    values: {},
-    errors: {},
+    answerValues: {},
     isSubmitting: false,
     showForm: false,
+    selectLogId: null,
 };
 
 const formSlice = createSlice({
@@ -19,22 +20,23 @@ const formSlice = createSlice({
     initialState,
     reducers: {
         setFieldValue(state, action: PayloadAction<{ field: string; value: any }>) {
-            state.values[action.payload.field] = action.payload.value;
+            state.answerValues[action.payload.field] = action.payload.value;
         },
         setFieldError(state, action: PayloadAction<{ field: string; error: string }>) {
-            state.errors[action.payload.field] = action.payload.error;
+            state.answerValues[action.payload.field] = action.payload.error;
         },
         setSubmitting(state, action: PayloadAction<boolean>) {
             state.isSubmitting = action.payload;
         },
         resetForm(state) {
-            state.values = {};
-            state.errors = {};
+            state.answerValues = {};
             state.isSubmitting = false;
         },
         setShowForm: (state, action: PayloadAction<boolean>) => {
-            console.log(action.payload);
             state.showForm = action.payload;
+        },
+        selectLogId(state, action: PayloadAction<number | null>) {
+            state.selectLogId = action.payload;
         }
     },
 });
@@ -44,6 +46,7 @@ export const {
     setFieldError, 
     setSubmitting, 
     resetForm, 
-    setShowForm
+    setShowForm,
+    selectLogId
 } = formSlice.actions;
 export default formSlice.reducer;

@@ -4,7 +4,6 @@ import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
-import { useAppSelector } from '@/store/store';
 import React, { useState } from 'react';
 import {
     Button,
@@ -16,7 +15,6 @@ export default function AddLog() {
     const [name, setName] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
-    const questionList = useAppSelector((state) => state.log.questions);
 
     const toggleQuestion = (question: string) => {
         setSelectedQuestions((prev) =>
@@ -70,6 +68,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         padding: 8,
         marginBottom: 8,
+        backgroundColor: '#fff'
     },
     selectedQuestions: { marginVertical: 8 },
     noQuestions: { color: '#888' },

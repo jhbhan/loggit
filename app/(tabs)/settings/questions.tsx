@@ -21,7 +21,7 @@ export default function QuestionScreen() {
               </ThemedView>
             ))}
           </ScrollView>
-          <PrimaryButton text="Add a new question" onPress={() => {router.push('/(tabs)/settings/addLog')}} />
+          <PrimaryButton text="Add a new question" onPress={() => {router.push('/(tabs)/settings/addQuestion')}} />
         </ThemedView>
     </ThemedSafeAreaView>
   );
