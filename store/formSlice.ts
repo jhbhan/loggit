@@ -4,12 +4,14 @@ interface FormState {
     values: Record<string, any>;
     errors: Record<string, string>;
     isSubmitting: boolean;
+    showForm: boolean;
 }
 
 const initialState: FormState = {
     values: {},
     errors: {},
     isSubmitting: false,
+    showForm: false,
 };
 
 const formSlice = createSlice({
@@ -30,8 +32,18 @@ const formSlice = createSlice({
             state.errors = {};
             state.isSubmitting = false;
         },
+        setShowForm: (state, action: PayloadAction<boolean>) => {
+            console.log(action.payload);
+            state.showForm = action.payload;
+        }
     },
 });
 
-export const { setFieldValue, setFieldError, setSubmitting, resetForm } = formSlice.actions;
+export const { 
+    setFieldValue, 
+    setFieldError, 
+    setSubmitting, 
+    resetForm, 
+    setShowForm
+} = formSlice.actions;
 export default formSlice.reducer;

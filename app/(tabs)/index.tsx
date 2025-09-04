@@ -3,7 +3,7 @@ import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView, themedStyles } from '@/components/ThemedView';
 import { useLogContext } from '@/hooks/LogContext';
-import { setShowForm } from '@/store/logSlice';
+import { setShowForm } from '@/store/formSlice';
 import { useAppDispatch } from '@/store/store';
 import React from 'react';
 

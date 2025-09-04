@@ -9,7 +9,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useLogContext } from '@/hooks/LogContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { setShowForm } from '@/store/logSlice';
+import { setShowForm } from '@/store/formSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { incrementStreak } from '@/store/userSlice';
 import { StepForm } from '@jhbhan/rn-form';
@@ -17,10 +17,9 @@ import { StepForm } from '@jhbhan/rn-form';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-  const showForm = useAppSelector((state) => state.log.showForm);
+  const showForm = useAppSelector((state) => state.form.showForm);
   const { currentForm, answers, setAnswer } = useLogContext();
   const questions = currentForm?.questionSet;
-  console.log(showForm);
 
   const closeForm = () => {
     dispatch(setShowForm(false));
