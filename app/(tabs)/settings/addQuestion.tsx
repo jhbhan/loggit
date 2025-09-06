@@ -3,6 +3,7 @@ import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
+import { questionFormats } from '@/constants/types';
 import React, { useState } from 'react';
 import {
     StyleSheet,
@@ -23,6 +24,11 @@ export default function AddQuestion() {
                     onChangeText={setQuestionText}
                     placeholder="Enter your question"
                 />
+                {
+                    questionFormats.map((format) => (
+                        <ThemedText key={format.type}>{format.title}</ThemedText>
+                    ))
+                }
                 <VerticalSpacer />
                 <PrimaryButton text="Add Question" onPress={() => { }} />
             </ThemedView>
