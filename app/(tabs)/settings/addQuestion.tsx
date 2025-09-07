@@ -1,9 +1,10 @@
 import NavHeader from '@/components/NavHeader';
-import { PrimaryButton } from '@/components/ThemedButton';
+import { PrimaryButton, SecondaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
+import { QuestionFormat } from '@jhbhan/rn-form';
 import React, { useState } from 'react';
 import {
     StyleSheet,
@@ -12,6 +13,7 @@ import {
 
 export default function AddQuestion() {
     const [questionText, setQuestionText] = useState('');
+    const [questionType, setQuestionType] = useState<QuestionFormat>(QuestionFormat.Text);
 
     return (
         <ThemedSafeAreaView style={themedStyles.listContainer}>
@@ -25,9 +27,21 @@ export default function AddQuestion() {
                     placeholder="Enter your question"
                 />
                 {
-                    questionFormats.map((format) => (
-                        <ThemedText key={format.type}>{format.title}</ThemedText>
-                    ))
+                    questionFormats.map((format) => {
+                        if (format.type === questionType)
+                            return <PrimaryButton 
+                                key={format.type} 
+                                text={format.title}
+                                onPress={() => { }} 
+                            />;
+                        else {
+                            return <SecondaryButton
+                                key={format.type}
+                                text={format.title}
+                                onPress={() => setQuestionType(format.type)}
+                            />;
+                        }
+                    })
                 }
                 <VerticalSpacer />
                 <PrimaryButton text="Add Question" onPress={() => { }} />
