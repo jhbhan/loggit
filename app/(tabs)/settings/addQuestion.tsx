@@ -2,6 +2,7 @@ import NavHeader from '@/components/NavHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
+import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
 import { QuestionFormat } from '@jhbhan/rn-form';
@@ -14,6 +15,10 @@ import {
 export default function AddQuestion() {
     const [questionText, setQuestionText] = useState('');
     const [questionType, setQuestionType] = useState<QuestionFormat>(QuestionFormat.Text);
+    const [minimum, setMinimum] = useState<number | null>(null);
+    const [maximum, setMaximum] = useState<number | null>(null);
+    const [multipleChoiceOptions, setMultipleChoiceOptions] = useState<string[]>([]);
+    const [multipleChoiceQuestionText, setMultipleChoiceQuestionText] = useState<string>('');
 
     return (
         <ThemedSafeAreaView style={themedStyles.listContainer}>
@@ -21,27 +26,73 @@ export default function AddQuestion() {
             <ThemedView style={themedStyles.listContainer} avoidTabNav>
                 <ThemedText style={styles.label}>Question Text</ThemedText>
                 <TextInput
-                    style={styles.input}
+                    style={themedStyles.input}
                     value={questionText}
                     onChangeText={setQuestionText}
                     placeholder="Enter your question"
                 />
+                <ThemedView style={themedStyles.grid}>
+                    {questionFormats.map((format) => {
+                        const isSelected = format.type === questionType;
+                        const ButtonComponent = isSelected ? PrimaryButton : SecondaryButton;
+                        return (
+                            <ThemedView key={format.type} style={themedStyles.col2Item}>
+                                <ButtonComponent
+                                    text={format.title}
+                                    onPress={() => setQuestionType(format.type)}
+                                />
+                            </ThemedView>
+                        );
+                    })}
+                </ThemedView>
                 {
-                    questionFormats.map((format) => {
-                        if (format.type === questionType)
-                            return <PrimaryButton 
-                                key={format.type} 
-                                text={format.title}
-                                onPress={() => { }} 
-                            />;
-                        else {
-                            return <SecondaryButton
-                                key={format.type}
-                                text={format.title}
-                                onPress={() => setQuestionType(format.type)}
-                            />;
-                        }
-                    })
+                    questionType === QuestionFormat.Number &&
+                    <>
+                        <ThemedView>
+                            <ThemedText type='subtitle'>Minimum</ThemedText>
+                            <NumberInput
+                                numberValue={minimum}
+                                onNumberChange={(val: number | null) => setMinimum(val)}
+                            />
+                        </ThemedView>
+                        <ThemedView>
+                            <ThemedText type='subtitle'>Maximum</ThemedText>
+                            <NumberInput
+                                numberValue={maximum}
+                                onNumberChange={(val: number | null) => setMaximum(val)}
+                            />
+                        </ThemedView>
+                    </>
+                }
+                {
+                    questionType === QuestionFormat.MultipleChoice &&
+                    <>
+                        <ThemedView>
+                            <ThemedText type='subtitle'>Options</ThemedText>
+                            <ThemedView style={themedStyles.grid}>
+                            {
+                                multipleChoiceOptions.map((option, index) => (
+                                    <SecondaryButton
+                                        key={index}
+                                        style={themedStyles.col2Item}
+                                        text={option}
+                                        disabled={true}
+                                    />
+                                ))
+                            }
+                            </ThemedView>
+                            <TextInput
+                                style={themedStyles.input}
+                                value={multipleChoiceQuestionText}
+                                onChangeText={setMultipleChoiceQuestionText}
+                                placeholder="Enter your options"
+                            />
+                            <SecondaryButton text="Add Option" onPress={() => {
+                                setMultipleChoiceOptions([...multipleChoiceOptions, multipleChoiceQuestionText]);
+                                setMultipleChoiceQuestionText('');
+                            }} />
+                        </ThemedView>
+                    </>
                 }
                 <VerticalSpacer />
                 <PrimaryButton text="Add Question" onPress={() => { }} />
@@ -52,13 +103,5 @@ export default function AddQuestion() {
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 24, backgroundColor: '#fff' },
-    label: { fontWeight: 'bold', marginTop: 16, marginBottom: 4 },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 6,
-        padding: 8,
-        marginBottom: 8,
-        backgroundColor: '#fff'
-    }
+    label: { fontWeight: 'bold', marginTop: 16, marginBottom: 4 }
 });

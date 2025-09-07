@@ -51,5 +51,26 @@ export const themedStyles = StyleSheet.create({
   listContainer: {
     flex: 1,
     paddingHorizontal: 24
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
+    padding: 8,
+    marginBottom: 8,
+    backgroundColor: '#fff'
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  col2Item: {
+    width: '48%',
+    marginBottom: 8
+  },
+  col3Item: {
+    width: '31%',
+    marginBottom: 8
   }
 });
