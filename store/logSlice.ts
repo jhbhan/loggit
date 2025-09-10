@@ -1,5 +1,5 @@
 import { beforeBedQuestions, morningQuestions } from '@/constants/sampleQuestions';
-import { LogViewModel, QuestionViewModel } from '@/constants/types';
+import { LogViewModel, QuestionSaveModel, QuestionViewModel } from '@/constants/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
@@ -44,8 +44,18 @@ const logSlice = createSlice({
         clearLogs: (state) => {
             state.logs = [];
         },
-        addQuestion: (state, action: PayloadAction<QuestionViewModel>) => {
-            state.questions.push(action.payload);
+        saveQuestion: (state, action: PayloadAction<QuestionSaveModel>) => {
+            const questionId = action.payload.id;
+            const existingQuestion = state.questions.find(question => question.id === questionId);
+            if (existingQuestion) {
+                Object.assign(existingQuestion, action.payload);
+            } else {
+
+                state.questions.push({
+                    id: Date.now(),
+                    ...action.payload,
+                });
+            }
         },
         addQuestionToLog: (state, action: PayloadAction<{ logId: number; question: QuestionViewModel }>) => {
             const { logId, question } = action.payload;
@@ -85,7 +95,7 @@ export const {
     addLog, 
     removeLog, 
     clearLogs, 
-    addQuestion, 
+    saveQuestion, 
     addQuestionToLog, 
     removeQuestionFromLog, 
     removeQuestion

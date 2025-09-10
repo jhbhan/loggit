@@ -5,7 +5,7 @@ import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/Theme
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
-import { addQuestion, getQuestionForId } from '@/store/logSlice';
+import { getQuestionForId, saveQuestion } from '@/store/logSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { QuestionFormat } from '@jhbhan/rn-form';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
@@ -34,8 +34,8 @@ export default function AddQuestion() {
     }, [questionId]);
 
     const onAdd = () => {
-        dispatch(addQuestion({
-            id: Date.now(),
+        dispatch(saveQuestion({
+            id: questionId ? Number(questionId) : undefined,
             text: questionText,
             format: questionType,
             options: multipleChoiceOptions

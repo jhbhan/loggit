@@ -21,6 +21,10 @@ export interface LogViewModel extends BaseModel {
 export interface QuestionViewModel extends FormQuestion {
 }
 
+export interface QuestionSaveModel extends Omit<QuestionViewModel, 'id'> {
+    id?: number
+}
+
 interface QuestionTypeInfo {
     type: QuestionFormat,
     title: string
