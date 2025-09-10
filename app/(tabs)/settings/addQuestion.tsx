@@ -5,25 +5,33 @@ import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/Theme
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
-import { addQuestion } from '@/store/logSlice';
-import { useAppDispatch } from '@/store/store';
+import { addQuestion, getQuestionForId } from '@/store/logSlice';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import { QuestionFormat } from '@jhbhan/rn-form';
-import { useNavigation } from 'expo-router';
-import React, { useState } from 'react';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     TextInput
 } from 'react-native';
 
 export default function AddQuestion() {
-    const [questionText, setQuestionText] = useState('');
-    const [questionType, setQuestionType] = useState<QuestionFormat>(QuestionFormat.Text);
-    const [minimum, setMinimum] = useState<number | null>(null);
-    const [maximum, setMaximum] = useState<number | null>(null);
-    const [multipleChoiceOptions, setMultipleChoiceOptions] = useState<string[]>([]);
+    const { questionId } = useLocalSearchParams();
+    const selectedQuestion = useAppSelector(getQuestionForId(Number(questionId)));
+    const [questionText, setQuestionText] = useState(selectedQuestion?.text ?? '');
+    const [questionType, setQuestionType] = useState<QuestionFormat>(selectedQuestion?.format ?? QuestionFormat.Text);
+    const [minimum, setMinimum] = useState<number | null>(selectedQuestion?.ratingMin ?? null);
+    const [maximum, setMaximum] = useState<number | null>(selectedQuestion?.ratingMax ?? null);
+    const [multipleChoiceOptions, setMultipleChoiceOptions] = useState<string[]>(selectedQuestion?.options ?? []);
     const [multipleChoiceQuestionText, setMultipleChoiceQuestionText] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
+
+    useEffect(() => {
+        if (questionId) {
+            
+        }
+    }, [questionId]);
 
     const onAdd = () => {
         dispatch(addQuestion({
@@ -111,7 +119,10 @@ export default function AddQuestion() {
                     </>
                 }
                 <VerticalSpacer />
-                <PrimaryButton text="Add Question" onPress={onAdd} />
+                <PrimaryButton
+                    text={questionId ? "Save" : "Add"}
+                    onPress={onAdd}
+                />
             </ThemedView>
         </ThemedSafeAreaView>
     );

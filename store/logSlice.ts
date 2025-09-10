@@ -77,6 +77,10 @@ export const getQuestionsForLog = (logId: number | null) => (state: RootState) =
     return log ? log.questionSet : [];
 };
 
+export const getQuestionForId = (questionId: number | null) => (state: RootState) => {
+    return state.log.questions.find(question => question.id === questionId) || null;
+};
+
 export const { 
     addLog, 
     removeLog, 
