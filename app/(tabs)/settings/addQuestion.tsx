@@ -5,7 +5,10 @@ import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/Theme
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
+import { addQuestion } from '@/store/logSlice';
+import { useAppDispatch } from '@/store/store';
 import { QuestionFormat } from '@jhbhan/rn-form';
+import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
 import {
     StyleSheet,
@@ -19,6 +22,19 @@ export default function AddQuestion() {
     const [maximum, setMaximum] = useState<number | null>(null);
     const [multipleChoiceOptions, setMultipleChoiceOptions] = useState<string[]>([]);
     const [multipleChoiceQuestionText, setMultipleChoiceQuestionText] = useState<string>('');
+    const dispatch = useAppDispatch();
+    const navigation = useNavigation();
+
+    const onAdd = () => {
+        dispatch(addQuestion({
+            id: Date.now(),
+            text: questionText,
+            format: questionType,
+            options: multipleChoiceOptions
+        }));
+
+        navigation.goBack();
+    }
 
     return (
         <ThemedSafeAreaView style={themedStyles.listContainer}>
@@ -95,7 +111,7 @@ export default function AddQuestion() {
                     </>
                 }
                 <VerticalSpacer />
-                <PrimaryButton text="Add Question" onPress={() => { }} />
+                <PrimaryButton text="Add Question" onPress={onAdd} />
             </ThemedView>
         </ThemedSafeAreaView>
     );
