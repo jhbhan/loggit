@@ -3,6 +3,7 @@ import { AddQuestionsModal } from '@/components/settings/AddQuestionsModal';
 import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
+import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import React, { useState } from 'react';
 import {
@@ -15,6 +16,8 @@ export default function AddLog() {
     const [name, setName] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
+    const [notificationHour, setNotificationHour] = useState<number | null>(null);
+    const [notificationMinute, setNotificationMinute] = useState<number | null>(null);
 
     const toggleQuestion = (question: string) => {
         setSelectedQuestions((prev) =>
@@ -35,6 +38,24 @@ export default function AddLog() {
                     onChangeText={setName}
                     placeholder="Enter log name"
                 />
+                <ThemedText style={styles.label}>Notification Time</ThemedText>
+                <ThemedView style={styles.notificationTimeContainer}>
+                    <NumberInput
+                        style={{flex: 1}}
+                        min={0}
+                        max={23}
+                        numberValue={notificationHour}
+                        onNumberChange={setNotificationHour}
+                    />
+                    <ThemedText>:</ThemedText>
+                    <NumberInput
+                        style={{flex: 1}}
+                        min={0}
+                        max={59}
+                        numberValue={notificationMinute}
+                        onNumberChange={setNotificationMinute}
+                    />
+                </ThemedView>
                 <ThemedText style={styles.label}>Questions</ThemedText>
                 <ThemedView style={styles.selectedQuestions}>
                     {selectedQuestions.length === 0 ? (
@@ -61,6 +82,11 @@ export default function AddLog() {
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 24, backgroundColor: '#fff' },
+    notificationTimeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
+    },
     label: { fontWeight: 'bold', marginTop: 16, marginBottom: 4 },
     input: {
         borderWidth: 1,
