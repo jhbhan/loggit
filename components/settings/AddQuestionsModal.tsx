@@ -1,3 +1,4 @@
+import { Entity } from '@/constants/types';
 import { useAppSelector } from '@/store/store';
 import React from 'react';
 import { Button, FlatList, Modal, StyleSheet, TouchableOpacity } from 'react-native';
@@ -7,8 +8,8 @@ import { ThemedView } from '../ThemedView';
 type AddQuestionsModalProps = {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  selectedQuestions: string[];
-  toggleQuestion: (question: string) => void;
+  selectedQuestions: Entity<string>[];
+  toggleQuestion: (val: Entity<string>) => void;
 };
 
 export const AddQuestionsModal = (props: AddQuestionsModalProps) => {
@@ -37,14 +38,14 @@ export const AddQuestionsModal = (props: AddQuestionsModalProps) => {
                         <TouchableOpacity
                             style={[
                                 styles.questionButton,
-                                selectedQuestions.includes(item.text) && styles.selectedButton,
+                                selectedQuestions.some(q => q.id === item.id) && styles.selectedButton,
                             ]}
-                            onPress={() => toggleQuestion(item.text)}
+                            onPress={() => toggleQuestion({ id: item.id, value: item.text })}
                         >
                             <ThemedText
                                 style={[
                                     styles.questionText,
-                                    selectedQuestions.includes(item.text) && styles.selectedText,
+                                    selectedQuestions.some(q => q.id === item.id) && styles.selectedText,
                                 ]}
                             >
                                 {item.text}

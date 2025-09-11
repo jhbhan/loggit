@@ -5,6 +5,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
+import { Entity } from '@/constants/types';
 import React, { useState } from 'react';
 import {
     Button,
@@ -15,15 +16,15 @@ import {
 export default function AddLog() {
     const [name, setName] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
+    const [selectedQuestions, setSelectedQuestions] = useState<Entity<string>[]>([]);
     const [notificationHour, setNotificationHour] = useState<number | null>(null);
     const [notificationMinute, setNotificationMinute] = useState<number | null>(null);
 
-    const toggleQuestion = (question: string) => {
+    const toggleQuestion = (val: Entity<string>) => {
         setSelectedQuestions((prev) =>
-            prev.includes(question)
-                ? prev.filter((q) => q !== question)
-                : [...prev, question]
+            prev.includes(val)
+                ? prev.filter((q) => q !== val)
+                : [...prev, val]
         );
     };
 
@@ -62,7 +63,12 @@ export default function AddLog() {
                         <ThemedText style={styles.noQuestions}>No questions selected</ThemedText>
                     ) : (
                         selectedQuestions.map((q) => (
-                            <ThemedText key={q} style={styles.questionItem}>{q}</ThemedText>
+                            <ThemedText
+                                key={q.id}
+                                style={styles.questionItem}
+                            >
+                                {q.value}
+                            </ThemedText>
                         ))
                     )}
                 </ThemedView>

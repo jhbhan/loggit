@@ -38,3 +38,8 @@ export const questionFormats: QuestionTypeInfo[] = [
     { type: QuestionFormat.Number, title: 'Number' },
     { type: QuestionFormat.TrueFalse, title: 'True/False' }
 ];
+
+export type Entity<T> = {
+    id: number;
+    value: T;
+};
