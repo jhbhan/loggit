@@ -1,3 +1,4 @@
+import { useNavigation } from '@/.expo/types/router';
 import NavHeader from '@/components/NavHeader';
 import { AddQuestionsModal } from '@/components/settings/AddQuestionsModal';
 import { PrimaryButton } from '@/components/ThemedButton';
@@ -6,6 +7,8 @@ import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/Theme
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { Entity } from '@/constants/types';
+import { saveLog } from '@/store/logSlice';
+import { useAppDispatch } from '@/store/store';
 import React, { useState } from 'react';
 import {
     Button,
@@ -19,6 +22,20 @@ export default function AddLog() {
     const [selectedQuestions, setSelectedQuestions] = useState<Entity<string>[]>([]);
     const [notificationHour, setNotificationHour] = useState<number | null>(null);
     const [notificationMinute, setNotificationMinute] = useState<number | null>(null);
+    const dispatch = useAppDispatch();
+    const navigation = useNavigation();
+
+    const onAdd = () => {
+        dispatch(saveLog(
+            {
+                name,
+                questionSet: [],
+                notificationTime: new Date(),
+                notificationFrequency: 'daily',
+            }
+        ));
+        navigation.goBack();
+    }
 
     const toggleQuestion = (val: Entity<string>) => {
         setSelectedQuestions((prev) =>
@@ -74,7 +91,10 @@ export default function AddLog() {
                 </ThemedView>
                 <Button title="Add Questions" onPress={() => setModalVisible(true)} />
                 <VerticalSpacer />
-                <PrimaryButton text="Save Log" onPress={() => { }} />
+                <PrimaryButton
+                    text="Save Log"
+                    onPress={onAdd}
+                />
             </ThemedView>
             <AddQuestionsModal
                 modalVisible={modalVisible}

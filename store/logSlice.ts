@@ -1,5 +1,5 @@
 import { beforeBedQuestions, morningQuestions } from '@/constants/sampleQuestions';
-import { LogViewModel, QuestionSaveModel, QuestionViewModel } from '@/constants/types';
+import { LogSaveModel, LogViewModel, QuestionSaveModel, QuestionViewModel } from '@/constants/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
@@ -35,8 +35,17 @@ const logSlice = createSlice({
     name: 'log',
     initialState,
     reducers: {
-        addLog: (state, action: PayloadAction<LogViewModel>) => {
-            state.logs.push(action.payload);
+        saveLog: (state, action: PayloadAction<LogSaveModel>) => {
+            const logId = action.payload.id;
+            const existingLog = state.logs.find(log => log.id === logId);
+            if (existingLog) {
+                Object.assign(existingLog, action.payload);
+            } else {
+                state.logs.push({
+                    id: Date.now(),
+                    ...action.payload
+                });
+            }
         },
         removeLog: (state, action: PayloadAction<number>) => {
             state.logs = state.logs.filter(log => log.id !== action.payload);
@@ -92,7 +101,7 @@ export const getQuestionForId = (questionId: number | null) => (state: RootState
 };
 
 export const { 
-    addLog, 
+    saveLog, 
     removeLog, 
     clearLogs, 
     saveQuestion, 

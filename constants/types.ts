@@ -18,6 +18,10 @@ export interface LogViewModel extends BaseModel {
     notificationFrequency?: 'daily' | 'weekly' | 'monthly' | 'custom';
 }
 
+export interface LogSaveModel extends Omit<LogViewModel, 'id'> {
+    id?: number
+}
+
 export interface QuestionViewModel extends FormQuestion {
 }
 

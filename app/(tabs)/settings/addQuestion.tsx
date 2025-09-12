@@ -90,33 +90,31 @@ export default function AddQuestion() {
                 }
                 {
                     questionType === QuestionFormat.MultipleChoice &&
-                    <>
-                        <ThemedView>
-                            <ThemedText type='subtitle'>Options</ThemedText>
-                            <ThemedView style={themedStyles.grid}>
-                            {
-                                multipleChoiceOptions.map((option, index) => (
-                                    <SecondaryButton
-                                        key={index}
-                                        style={themedStyles.col2Item}
-                                        text={option}
-                                        disabled={true}
-                                    />
-                                ))
-                            }
-                            </ThemedView>
-                            <TextInput
-                                style={themedStyles.input}
-                                value={multipleChoiceQuestionText}
-                                onChangeText={setMultipleChoiceQuestionText}
-                                placeholder="Enter your options"
-                            />
-                            <SecondaryButton text="Add Option" onPress={() => {
-                                setMultipleChoiceOptions([...multipleChoiceOptions, multipleChoiceQuestionText]);
-                                setMultipleChoiceQuestionText('');
-                            }} />
+                    <ThemedView>
+                        <ThemedText type='subtitle'>Options</ThemedText>
+                        <ThemedView style={themedStyles.grid}>
+                        {
+                            multipleChoiceOptions.map((option, index) => (
+                                <SecondaryButton
+                                    key={index}
+                                    style={themedStyles.col2Item}
+                                    text={option}
+                                    disabled={true}
+                                />
+                            ))
+                        }
                         </ThemedView>
-                    </>
+                        <TextInput
+                            style={themedStyles.input}
+                            value={multipleChoiceQuestionText}
+                            onChangeText={setMultipleChoiceQuestionText}
+                            placeholder="Enter your options"
+                        />
+                        <SecondaryButton text="Add Option" onPress={() => {
+                            setMultipleChoiceOptions([...multipleChoiceOptions, multipleChoiceQuestionText]);
+                            setMultipleChoiceQuestionText('');
+                        }} />
+                    </ThemedView>
                 }
                 <VerticalSpacer />
                 <PrimaryButton
