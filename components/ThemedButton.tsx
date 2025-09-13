@@ -9,7 +9,7 @@ export type ThemedButtonProps = TouchableOpacityProps & {
   type?: 'primary' | 'secondary' | 'danger';
   buttonStyle?: StyleProps;
   textStyle?: TextStyle;
-  text: string
+  text?: string
 };
 
 export function PrimaryButton({
@@ -66,6 +66,41 @@ export function SecondaryButton({
     >
       <Text style={[styles.default, { color: textColor }, textStyle]}>
         {text}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+interface ToggleButtonProps<T> extends ThemedButtonProps {
+  toggleValues: [T, T];
+  value: T;
+  setValue: React.Dispatch<React.SetStateAction<T>>;
+}
+
+export function ToggleButton<T>({
+  lightColor,
+  darkColor,
+  toggleValues,
+  value,
+  setValue,
+  ...rest
+}: ToggleButtonProps<T>) {
+
+  const handlePress = () => {
+    setValue(prev => prev === toggleValues[0] ? toggleValues[1] : toggleValues[0]);
+  };
+
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        { backgroundColor: 'white' }
+      ]}
+      onPress={handlePress}
+      {...rest}
+    >
+      <Text style={[styles.default, { color: 'black' }]}>
+        {value as string}
       </Text>
     </TouchableOpacity>
   );

@@ -1,4 +1,4 @@
-import NavHeader from '@/components/NavHeader';
+import { NavHeader } from '@/components/NavHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';

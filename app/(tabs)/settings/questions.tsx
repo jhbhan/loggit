@@ -1,12 +1,12 @@
 
-import NavHeader from '@/components/NavHeader';
+import { NavHeader } from '@/components/NavHeader';
+import { ScrollItem } from '@/components/settings/ScrollItem';
 import { PrimaryButton, SecondaryButton } from '@/components/ThemedButton';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { useAppSelector } from '@/store/store';
 import { router } from 'expo-router';
 import React from 'react';
 import { ScrollView, TextInput } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 export default function QuestionScreen() {
   const questions = useAppSelector((state) => state.log.questions);
@@ -35,16 +35,12 @@ export default function QuestionScreen() {
           />
           <ScrollView>
             {filteredQuestions.map((question) => (
-              <Animated.View
-                key={question.id}
-              >
-                <ThemedView>
+                <ScrollItem key={question.id}>
                   <SecondaryButton
                     text={question.text}
                     onPress={() => onAddClicked(question.id)}
                   />
-                </ThemedView>
-              </Animated.View>
+                </ScrollItem>
             ))}
           </ScrollView>
           <PrimaryButton text="Add a new question" onPress={() => onAddClicked(undefined)} />

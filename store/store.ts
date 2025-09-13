@@ -5,6 +5,7 @@ import type { ThunkDispatch } from 'redux-thunk';
 import authSlice from './authSlice';
 import formSlice from './formSlice';
 import logSlice from './logSlice';
+import userSlice from './userSlice';
 
 // Typed versions of useDispatch and useSelector
 export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>;
@@ -18,6 +19,7 @@ export const store = configureStore({
     log: logSlice,
     form: formSlice,
     auth: authSlice,
+    user: userSlice,
   },
 });
 

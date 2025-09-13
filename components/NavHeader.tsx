@@ -11,7 +11,7 @@ interface NavHeaderProps {
     showBackButton?: boolean;
 }
 
-export default function NavHeader({ showTitle = true, title, showBackButton }: NavHeaderProps) {
+export function NavHeader({ showTitle = true, title, showBackButton }: NavHeaderProps) {
     return (
         <ThemedView style={{alignItems: 'center', justifyContent: 'center', marginVertical: 10}}>
             {showBackButton && (

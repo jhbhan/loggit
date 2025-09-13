@@ -1,5 +1,6 @@
 
-import NavHeader from '@/components/NavHeader';
+import { NavHeader } from '@/components/NavHeader';
+import { ScrollItem } from '@/components/settings/ScrollItem';
 import { PrimaryButton, SecondaryButton } from '@/components/ThemedButton';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { useAppSelector } from '@/store/store';
@@ -15,7 +16,9 @@ export default function LogsScreen() {
       <ThemedView avoidTabNav style={[themedStyles.listContainer]}> 
         <ScrollView>
           {logs.map((log) => (
-            <SecondaryButton key={log.id} onPress={() => { }} text={log.name} />
+            <ScrollItem key={log.id}>
+              <SecondaryButton onPress={() => { }} text={log.name} />
+            </ScrollItem>
           ))}
         </ScrollView>
         <PrimaryButton text="Add a log" onPress={() => {router.push('/(tabs)/settings/addLog')}} />

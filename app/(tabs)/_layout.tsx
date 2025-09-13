@@ -16,11 +16,14 @@ import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const userName = useAppSelector((state) => state.user.name);
+  const userStreak = useAppSelector((state) => state.user.streak);
 
   return (
     <>
       <ThemedSafeAreaView>
-        <Text>Streak Here</Text>
+        <Text>{userName}</Text>
+        <Text>{userStreak}</Text>
       </ThemedSafeAreaView>
       <Tabs
         screenOptions={{

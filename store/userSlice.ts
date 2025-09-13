@@ -13,10 +13,10 @@ interface UserState {
 
 const initialState: UserState = {
     id: null,
-    name: null,
+    name: 'Jason Bhan',
     email: null,
     avatarUrl: null,
-    streak: null,
+    streak: 5,
     currency: null,
 };
 

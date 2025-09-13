@@ -1,6 +1,6 @@
-import NavHeader from '@/components/NavHeader';
+import { NavHeader } from '@/components/NavHeader';
 import { AddQuestionsModal } from '@/components/settings/AddQuestionsModal';
-import { PrimaryButton } from '@/components/ThemedButton';
+import { PrimaryButton, ToggleButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { NumberInput } from '@/components/ui/NumberInput';
@@ -63,6 +63,11 @@ export default function AddLog() {
                 />
                 <ThemedText style={styles.label}>Notification Time</ThemedText>
                 <ThemedView style={styles.notificationTimeContainer}>
+                    <ToggleButton
+                        toggleValues={['AM', 'PM']}
+                        value={ampm}
+                        setValue={setAmpm}
+                    />
                     <NumberInput
                         style={{flex: 1}}
                         min={0}
