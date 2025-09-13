@@ -1,4 +1,3 @@
-import { useNavigation } from '@/.expo/types/router';
 import NavHeader from '@/components/NavHeader';
 import { AddQuestionsModal } from '@/components/settings/AddQuestionsModal';
 import { PrimaryButton } from '@/components/ThemedButton';
@@ -9,6 +8,7 @@ import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { Entity, TimePeriod } from '@/constants/types';
 import { saveLog } from '@/store/logSlice';
 import { useAppDispatch } from '@/store/store';
+import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
 import {
     Button,
