@@ -6,7 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView, themedStyles, ThemedView } from '@/components/ThemedView';
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
-import { Entity } from '@/constants/types';
+import { Entity, TimePeriod } from '@/constants/types';
 import { saveLog } from '@/store/logSlice';
 import { useAppDispatch } from '@/store/store';
 import React, { useState } from 'react';
@@ -22,6 +22,7 @@ export default function AddLog() {
     const [selectedQuestions, setSelectedQuestions] = useState<Entity<string>[]>([]);
     const [notificationHour, setNotificationHour] = useState<number | null>(null);
     const [notificationMinute, setNotificationMinute] = useState<number | null>(null);
+    const [ampm, setAmpm] = useState<TimePeriod>('AM');
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
 
@@ -29,8 +30,12 @@ export default function AddLog() {
         dispatch(saveLog(
             {
                 name,
-                questionSet: [],
-                notificationTime: new Date(),
+                questionIds: selectedQuestions.map(q => q.id),
+                notificationTime: {
+                    hours: notificationHour ?? 0,
+                    minutes: notificationMinute ?? 0,
+                    ampm: ampm
+                },
                 notificationFrequency: 'daily',
             }
         ));

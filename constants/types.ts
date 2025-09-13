@@ -12,14 +12,23 @@ export interface LogDataModel extends BaseModel {
     questionSetId: number,
 }
 
+export type TimePeriod = 'AM' | 'PM';
+
+type Time = {
+    hours: number;
+    minutes: number;
+    ampm: TimePeriod;
+}
+
 export interface LogViewModel extends BaseModel {
     questionSet: QuestionViewModel[];
-    notificationTime?: Date;
+    notificationTime?: Time;
     notificationFrequency?: 'daily' | 'weekly' | 'monthly' | 'custom';
 }
 
-export interface LogSaveModel extends Omit<LogViewModel, 'id'> {
-    id?: number
+export interface LogSaveModel extends Omit<LogViewModel, 'id' | 'questionSet'> {
+    id?: number,
+    questionIds: number[]
 }
 
 export interface QuestionViewModel extends FormQuestion {

@@ -38,12 +38,18 @@ const logSlice = createSlice({
         saveLog: (state, action: PayloadAction<LogSaveModel>) => {
             const logId = action.payload.id;
             const existingLog = state.logs.find(log => log.id === logId);
+            const newQuestionSet: QuestionViewModel[] = state.questions.filter(q => action.payload.questionIds.includes(q.id));
+
             if (existingLog) {
-                Object.assign(existingLog, action.payload);
+                Object.assign(existingLog, {
+                    ...action.payload,
+                    questionSet: newQuestionSet
+                });
             } else {
                 state.logs.push({
                     id: Date.now(),
-                    ...action.payload
+                    ...action.payload,
+                    questionSet: newQuestionSet
                 });
             }
         },
