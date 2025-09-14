@@ -1,6 +1,6 @@
 import { beforeBedQuestions, morningQuestions } from '@/constants/sampleQuestions';
 import { LogSaveModel, LogViewModel, QuestionSaveModel, QuestionViewModel } from '@/constants/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 const initialLogs: LogViewModel[] = [
@@ -97,10 +97,14 @@ const logSlice = createSlice({
     },
 });
 
-export const getQuestionsForLog = (logId: number | null) => (state: RootState) => {
-    const log = state.log.logs.find(log => log.id === logId);
-    return log ? log.questionSet : [];
-};
+export const makeGetQuestionsForLog = (logId: number | null) =>
+  createSelector(
+    [(state: RootState) => state.log.logs],
+    (logs) => {
+      const log = logs.find((log) => log.id === logId);
+      return log?.questionSet ?? [];
+    }
+  );
 
 export const getQuestionForId = (questionId: number | null) => (state: RootState) => {
     return state.log.questions.find(question => question.id === questionId) || null;

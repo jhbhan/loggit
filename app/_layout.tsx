@@ -5,8 +5,9 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { store } from '@/store/store';
+import { store, useAppSelector } from '@/store/store';
 import { Provider } from 'react-redux';
+import LoginScreen from './login';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -22,12 +23,28 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
+          <MainAppLayout />
       </ThemeProvider>
     </Provider>
   );
 }
+
+const MainAppLayout = () => {
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+
+  if (!isAuthenticated) {
+    return (
+      <LoginScreen />
+    );
+  }
+
+  return (
+    <>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="auto" />
+    </>
+  );
+};

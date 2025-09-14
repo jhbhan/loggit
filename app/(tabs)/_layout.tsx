@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Platform, Text } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -9,7 +9,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { setShowForm } from '@/store/formSlice';
-import { getQuestionsForLog } from '@/store/logSlice';
+import { makeGetQuestionsForLog } from '@/store/logSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { incrementStreak } from '@/store/userSlice';
 import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
@@ -71,9 +71,8 @@ const StepFormWrapper = () => {
   const showForm = useAppSelector((state) => state.form.showForm);
   const selectedFormId = useAppSelector((state) => state.form.selectLogId);
   const [answers, setAnswers] = useState<Record<number, FormAnswerType>>({});
-  const questions = useAppSelector(getQuestionsForLog(selectedFormId));
-
-  if (!showForm || !questions) return null;
+  const selector = useMemo(() => makeGetQuestionsForLog(selectedFormId), [selectedFormId]);
+  const questions = useAppSelector(selector);
 
   const closeForm = () => {
     dispatch(setShowForm(false));
@@ -90,6 +89,8 @@ const StepFormWrapper = () => {
         [questionId]: answer
     }));
   };
+
+  if (!showForm || !questions) return null;
 
   return (
     <StepForm
