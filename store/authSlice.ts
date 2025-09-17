@@ -37,4 +37,17 @@ const authSlice = createSlice({
 });
 
 export const { login, logout } = authSlice.actions;
+
+export const loginThunk = (email: string, password: string) => async (dispatch: any) => {
+    // Simulate an API call
+    setTimeout(() => {
+        dispatch(login({
+            user: { id: '1', name: 'John Doe', email },
+            token: 'dummy-token'
+        }));
+    }, 1000);
+
+    return "hello world";
+};
+
 export default authSlice.reducer;
