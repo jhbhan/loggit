@@ -30,15 +30,12 @@ interface SettingButtonProps {
   onPress: () => void;
 }
 
-export const SettingButton = (props: SettingButtonProps) => {
-  return (
-    <SecondaryButton
-      style={{
-        marginVertical: 8, 
-        alignItems: 'flex-start',
-      }}
-      text={props.text}
-      onPress={props.onPress}
-    />
-  );
-};
+export const SettingButton = (props: SettingButtonProps) => 
+  <SecondaryButton
+    style={{
+      marginVertical: 8, 
+      alignItems: 'flex-start',
+    }}
+    text={props.text}
+    onPress={props.onPress}
+  />
