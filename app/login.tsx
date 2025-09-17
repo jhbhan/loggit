@@ -3,6 +3,7 @@ import { themedStyles, ThemedView } from '@/components/ThemedView';
 import { login } from '@/store/authSlice';
 import { useAppDispatch } from '@/store/store';
 import React, { useState } from 'react';
+import { TextInput } from 'react-native';
 
 function LoginScreen() {
     const dispatch = useAppDispatch();
@@ -20,6 +21,14 @@ function LoginScreen() {
         <ThemedView
             style={themedStyles.centeredContainer}
         >
+            <TextInput
+                style={themedStyles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+            />
             <PrimaryButton
                 text="Login"
                 onPress={handleLogIn}
