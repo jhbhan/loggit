@@ -1,3 +1,4 @@
+import { signIn, signOutUser, signUp } from "@/util/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "./store";
 
@@ -41,40 +42,50 @@ export const { login, logout } = authSlice.actions;
 
 export const loginThunk =
     (email: string, password: string) => async (dispatch: AppDispatch) => {
-        // Simulate an API call
-        setTimeout(() => {
+        const result = await signIn(email, password);
+        if (result.user) {
             dispatch(
                 login({
-                    user: { id: "1", name: "John Doe", email },
-                    token: "dummy-token",
+                    user: {
+                        id: result.user.uid,
+                        name: result.user.displayName ?? "User",
+                        email: email,
+                    },
+                    token: "token",
                 })
             );
-        }, 1000);
-
-        return "hello world";
+            return;
+        }
+        return "Invalid email or password";
     };
 
 export const signUpThunk =
     (name: string, email: string, password: string) =>
     async (dispatch: AppDispatch) => {
-        // Simulate an API call
-        setTimeout(() => {
+        const result = await signUp(name, email, password);
+        if (result.user) {
             dispatch(
                 login({
-                    user: { id: "1", name, email },
-                    token: "dummy-token",
+                    user: {
+                        id: result.user.uid,
+                        name: result.user.displayName ?? name,
+                        email: email,
+                    },
+                    token: "token",
                 })
             );
-        }, 1000);
-
-        return "hello world";
+            return;
+        }
+        return "Error signing up";
     };
 
 export const logoutThunk = () => async (dispatch: AppDispatch) => {
-    // Simulate an API call
-    setTimeout(() => {
+    try {
+        await signOutUser();
         dispatch(logout());
-    }, 1000);
+    } catch (error) {
+        console.error("Error signing out:", error);
+    }
 };
 
 export default authSlice.reducer;
