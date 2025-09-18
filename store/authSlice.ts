@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "./store";
 
 type User = {
     id: string;
     name: string;
     email: string;
-}
+};
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -19,7 +20,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-    name: 'auth',
+    name: "auth",
     initialState,
     reducers: {
         login(state, action: PayloadAction<{ user: User; token: string }>) {
@@ -28,7 +29,7 @@ const authSlice = createSlice({
             state.token = action.payload.token;
         },
         logout(state) {
-            console.log("here")
+            console.log("here");
             state.isAuthenticated = false;
             state.user = null;
             state.token = null;
@@ -38,16 +39,42 @@ const authSlice = createSlice({
 
 export const { login, logout } = authSlice.actions;
 
-export const loginThunk = (email: string, password: string) => async (dispatch: any) => {
+export const loginThunk =
+    (email: string, password: string) => async (dispatch: AppDispatch) => {
+        // Simulate an API call
+        setTimeout(() => {
+            dispatch(
+                login({
+                    user: { id: "1", name: "John Doe", email },
+                    token: "dummy-token",
+                })
+            );
+        }, 1000);
+
+        return "hello world";
+    };
+
+export const signUpThunk =
+    (name: string, email: string, password: string) =>
+    async (dispatch: AppDispatch) => {
+        // Simulate an API call
+        setTimeout(() => {
+            dispatch(
+                login({
+                    user: { id: "1", name, email },
+                    token: "dummy-token",
+                })
+            );
+        }, 1000);
+
+        return "hello world";
+    };
+
+export const logoutThunk = () => async (dispatch: AppDispatch) => {
     // Simulate an API call
     setTimeout(() => {
-        dispatch(login({
-            user: { id: '1', name: 'John Doe', email },
-            token: 'dummy-token'
-        }));
+        dispatch(logout());
     }, 1000);
-
-    return "hello world";
 };
 
 export default authSlice.reducer;
