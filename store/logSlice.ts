@@ -1,30 +1,30 @@
 import {
     beforeBedQuestions,
     morningQuestions,
-} from "@/constants/sampleQuestions";
+} from '@/constants/sampleQuestions';
 import {
     LogSaveModel,
     LogViewModel,
     QuestionSaveModel,
     QuestionViewModel,
-} from "@/constants/types";
+} from '@/constants/types';
 import {
     createAsyncThunk,
     createSelector,
     createSlice,
     PayloadAction,
-} from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "./store";
+} from '@reduxjs/toolkit';
+import { AppDispatch, RootState } from './store';
 
 const initialLogs: LogViewModel[] = [
     {
         id: 1,
-        name: "Before Bed Routine",
+        name: 'Before Bed Routine',
         questionSet: beforeBedQuestions,
     },
     {
         id: 2,
-        name: "Morning Routine",
+        name: 'Morning Routine',
         questionSet: morningQuestions,
     },
 ];
@@ -45,7 +45,7 @@ const initialState: LogState = {
 };
 
 const logSlice = createSlice({
-    name: "log",
+    name: 'log',
     initialState,
     reducers: {
         saveLog: (state, action: PayloadAction<LogSaveModel>) => {
@@ -155,7 +155,7 @@ export const removeQuestionFromLogThunk =
     };
 
 export const addQuestionToLogThunk = createAsyncThunk(
-    "log/addQuestionToLog",
+    'log/addQuestionToLog',
     async (
         payload: { logId: number; question: number },
         { dispatch, getState }
@@ -166,7 +166,7 @@ export const addQuestionToLogThunk = createAsyncThunk(
                 (q) => q.id === payload.question
             );
             if (!question) {
-                throw new Error("Question not found");
+                throw new Error('Question not found');
             }
             dispatch(
                 addQuestionToLog({
