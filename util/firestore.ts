@@ -99,12 +99,12 @@ export const addDocument = async <T = DocumentData>(
  */
 export const addDocumentToUser = async <T = {}>(
     userId: string,
-    pathSegments: string[],
+    path: string,
     data: T
 ): Promise<string> => {
     try {
         const docRef = await addDoc(
-            collection(db, 'users', userId, ...pathSegments),
+            collection(db, 'users', userId, ...path.split('/')),
             {
                 ...data,
                 createdAt: serverTimestamp(),
