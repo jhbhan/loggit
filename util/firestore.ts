@@ -17,8 +17,8 @@ import {
     where,
     WriteBatch,
     writeBatch,
-} from "firebase/firestore";
-import { db } from "./firebase";
+} from 'firebase/firestore';
+import { db } from './firebase';
 
 // Generic Firestore utility functions
 
@@ -74,7 +74,7 @@ export const getCollection = async <T = DocumentData>(
  */
 export const addDocument = async <T = DocumentData>(
     collectionName: string,
-    data: Omit<T, "id">
+    data: Omit<T, 'id'>
 ): Promise<string> => {
     try {
         const collectionRef = collection(db, collectionName);
@@ -86,6 +86,35 @@ export const addDocument = async <T = DocumentData>(
         return docRef.id;
     } catch (error) {
         console.error(`Error adding document to ${collectionName}:`, error);
+        throw error;
+    }
+};
+
+/**
+ * Generic function to add a document under a user.
+ * @param userId - The user ID
+ * @param pathSegments - Path segments under the user (e.g., ['logs'] or ['logs', logId, 'questions'])
+ * @param data - Document data
+ * @returns the Firestore document ID
+ */
+export const addDocumentToUser = async <T = {}>(
+    userId: string,
+    pathSegments: string[],
+    data: T
+): Promise<string> => {
+    try {
+        const docRef = await addDoc(
+            collection(db, 'users', userId, ...pathSegments),
+            {
+                ...data,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+            }
+        );
+
+        return docRef.id;
+    } catch (error) {
+        console.error(`Error adding document under user ${userId}:`, error);
         throw error;
     }
 };
@@ -171,7 +200,7 @@ export const commitBatch = async (batch: WriteBatch): Promise<void> => {
     try {
         await batch.commit();
     } catch (error) {
-        console.error("Error committing batch:", error);
+        console.error('Error committing batch:', error);
         throw error;
     }
 };
@@ -192,11 +221,11 @@ export const queryHelpers = {
 export const getDocumentsByUserId = async <T = DocumentData>(
     collectionName: string,
     userId: string,
-    orderByField: string = "createdAt",
-    orderDirection: "asc" | "desc" = "desc"
+    orderByField: string = 'createdAt',
+    orderDirection: 'asc' | 'desc' = 'desc'
 ): Promise<T[]> => {
     return queryDocuments<T>(collectionName, [
-        where("userId", "==", userId),
+        where('userId', '==', userId),
         orderBy(orderByField, orderDirection),
     ]);
 };
@@ -210,7 +239,7 @@ export const getRecentDocuments = async <T = DocumentData>(
     lastDoc?: QueryDocumentSnapshot<DocumentData>
 ): Promise<T[]> => {
     const constraints: QueryConstraint[] = [
-        orderBy("createdAt", "desc"),
+        orderBy('createdAt', 'desc'),
         limit(limitCount),
     ];
 
