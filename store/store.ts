@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import formSlice from './formSlice';
-import logSlice from './logSlice';
-import userSlice from './userSlice';
 import authSlice from './authSlice';
+import formSlice from './form/formSlice';
+import logSlice from './log/logSlice';
+import userSlice from './user/userSlice';
 
 // Typed versions of useDispatch and useSelector
 export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>;
@@ -15,12 +15,12 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 // import other slices here
 // import userSlice from './userSlice';
 export const store = configureStore({
-  reducer: {
-    auth: authSlice,
-    form: formSlice,
-    log: logSlice,
-    user: userSlice,
-  },
+    reducer: {
+        auth: authSlice,
+        form: formSlice,
+        log: logSlice,
+        user: userSlice,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

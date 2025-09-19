@@ -3,7 +3,7 @@ import { SignUpForm } from '@/components/login/SignUpForm';
 import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { themedStyles, ThemedView } from '@/components/ThemedView';
-import { loginThunk, signUpThunk } from '@/store/authSlice';
+import { loginThunk, signUpThunk } from '@/store/auth/thunks';
 import { useAppDispatch } from '@/store/store';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
