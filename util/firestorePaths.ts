@@ -1,6 +1,7 @@
 export namespace Path {
     export namespace User {
         export const base = 'users';
+        export const logs = (userId: string) => `users/${userId}/logs`;
     }
     export namespace Logs {
         export const base = 'logs';
