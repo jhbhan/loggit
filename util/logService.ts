@@ -1,5 +1,5 @@
-import { LogSaveModel } from '@/constants/types';
-import { addDocumentToUser } from './firestore';
+import { LogSaveModel, QuestionSaveModel } from '@/constants/types';
+import { addDocument, addDocumentToUser } from './firestore';
 
 export const createLog = async (log: LogSaveModel, userId: string) => {
     await addDocumentToUser<LogSaveModel>(userId, ['logs'], log);
@@ -7,19 +7,23 @@ export const createLog = async (log: LogSaveModel, userId: string) => {
     console.log('Log created:', log);
 };
 
-export const createQuestionForLog = async (
-    questionText: string,
+export const addQuestionToLog = async (
+    question: QuestionSaveModel,
     logId: string,
     userId: string
 ) => {
-    const question = {
-        text: questionText,
-        logId: logId,
-    };
-    await addDocumentToUser<typeof question>(
+    await addDocumentToUser<QuestionSaveModel>(
         userId,
         ['logs', logId, 'questions'],
         question
     );
+    console.log('Question created:', question);
+};
+
+export const createNewQuestion = async (
+    question: QuestionSaveModel,
+    userId: string
+) => {
+    await addDocument<QuestionSaveModel>('question', question);
     console.log('Question created:', question);
 };
