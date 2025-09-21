@@ -9,7 +9,8 @@ import {
 import { NumberInput } from '@/components/ui/NumberInput';
 import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { questionFormats } from '@/constants/types';
-import { getQuestionForId, saveQuestion } from '@/store/log/logSlice';
+import { saveQuestion } from '@/store/log/logSlice';
+import { getQuestionForId } from '@/store/log/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { QuestionFormat } from '@jhbhan/rn-form';
 import { useLocalSearchParams, useNavigation } from 'expo-router';

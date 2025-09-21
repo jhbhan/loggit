@@ -9,7 +9,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { setShowForm } from '@/store/form/formSlice';
-import { makeGetQuestionsForLog } from '@/store/log/logSlice';
+import { makeGetQuestionsForLog } from '@/store/log/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { incrementStreak } from '@/store/user/userSlice';
 import { FormAnswerType, StepForm } from '@jhbhan/rn-form';
