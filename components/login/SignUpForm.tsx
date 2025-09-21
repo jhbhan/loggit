@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { TextInput } from "react-native";
-import { ThemedText } from "../ThemedText";
-import { themedStyles } from "../ThemedView";
-import { LoginFormProps } from "./LoginForm";
+import React, { useEffect, useState } from 'react';
+import { TextInput } from 'react-native';
+import { themedStyles } from '../ThemedView';
+import { LoginFormProps } from './LoginForm';
 
 export const SignUpForm = (
     props: LoginFormProps & {
         name: string;
         onNameChange: (name: string) => void;
+        setError: (hasError: string) => void;
     }
 ) => {
     const {
@@ -18,11 +18,22 @@ export const SignUpForm = (
         loading,
         onEmailChange: setEmail,
         onPasswordChange: setPassword,
+        setError,
     } = props;
 
-    const [confirmEmail, setConfirmEmail] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmEmail, setConfirmEmail] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const inputStyle = [themedStyles.input, themedStyles.threeQuarterWidth];
+
+    useEffect(() => {
+        if (confirmEmail !== email) {
+            setError('Emails do not match');
+        } else if (confirmPassword !== password) {
+            setError('Passwords do not match');
+        } else {
+            setError('');
+        }
+    }, [email, confirmEmail, password, confirmPassword]);
 
     return (
         <>
@@ -50,9 +61,6 @@ export const SignUpForm = (
                 autoCapitalize="none"
                 editable={!loading}
             />
-            {confirmEmail && confirmEmail !== email && (
-                <ThemedText type="error">Emails do not match</ThemedText>
-            )}
             <TextInput
                 style={inputStyle}
                 value={password}
@@ -71,9 +79,6 @@ export const SignUpForm = (
                 autoCapitalize="none"
                 secureTextEntry
             />
-            {confirmPassword && confirmPassword !== password && (
-                <ThemedText type="error">Passwords do not match</ThemedText>
-            )}
         </>
     );
 };

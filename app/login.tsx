@@ -3,6 +3,7 @@ import { SignUpForm } from '@/components/login/SignUpForm';
 import { PrimaryButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { themedStyles, ThemedView } from '@/components/ThemedView';
+import { VerticalSpacer } from '@/components/ui/VerticalSpacer';
 import { loginThunk, signUpThunk } from '@/store/auth/thunks';
 import { useAppDispatch } from '@/store/store';
 import React, { useState } from 'react';
@@ -54,6 +55,7 @@ function LoginScreen() {
                     loading={loading}
                     onEmailChange={setEmail}
                     onPasswordChange={setPassword}
+                    setError={setError}
                 />
             )}
             <TouchableOpacity
@@ -74,8 +76,9 @@ function LoginScreen() {
                     <Text style={{ color: 'red' }}>{error}</Text>
                 </ThemedView>
             ) : null}
+            <VerticalSpacer height={12} />
             <PrimaryButton
-                disabled={loading}
+                disabled={loading || error !== ''}
                 text={loading ? 'Logging in...' : 'Log In'}
                 onPress={handleSubmit}
             />
