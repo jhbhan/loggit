@@ -1,4 +1,8 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+    DarkTheme,
+    DefaultTheme,
+    ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -10,41 +14,43 @@ import { Provider } from 'react-redux';
 import LoginScreen from './login';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+    const colorScheme = useColorScheme();
+    const [loaded] = useFonts({
+        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    });
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+    if (!loaded) {
+        // Async font loading only occurs in development.
+        return null;
+    }
 
-  return (
-    <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <MainAppLayout />
-      </ThemeProvider>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <ThemeProvider
+                value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+            >
+                <MainAppLayout />
+            </ThemeProvider>
+        </Provider>
+    );
 }
 
 const MainAppLayout = () => {
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
-
-  if (!isAuthenticated) {
-    return (
-      <LoginScreen />
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
     );
-  }
 
-  return (
-    <>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </>
-  );
+    if (!isAuthenticated) {
+        return <LoginScreen />;
+    }
+
+    return (
+        <>
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+        </>
+    );
 };

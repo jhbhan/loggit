@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import authSlice from './authSlice';
+import authSlice from './auth/authSlice';
 import formSlice from './form/formSlice';
 import logSlice from './log/logSlice';
 import userSlice from './user/userSlice';

@@ -10,9 +10,15 @@ import { Text, TouchableOpacity } from 'react-native';
 
 function LoginScreen() {
     const dispatch = useAppDispatch();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [name, setName] = useState(
+        process.env.NODE_ENV === 'development' ? 'Test User' : ''
+    );
+    const [email, setEmail] = useState(
+        process.env.NODE_ENV === 'development' ? 'test@example.com' : ''
+    );
+    const [password, setPassword] = useState(
+        process.env.NODE_ENV === 'development' ? 'password' : ''
+    );
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [formType, setFormType] = useState<'login' | 'signup'>('login');

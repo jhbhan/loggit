@@ -6,6 +6,18 @@ import { login, logout } from './authSlice';
 
 export const loginThunk =
     (email: string, password: string) => async (dispatch: AppDispatch) => {
+        if (process.env.NODE_ENV !== 'production') {
+            dispatch(
+                login({
+                    user: {
+                        id: 'test-uid',
+                        name: 'Test User',
+                        email: email,
+                    },
+                    token: 'test-token',
+                })
+            );
+        }
         const result = await signIn(email, password);
         if (result.user) {
             dispatch(
@@ -26,6 +38,18 @@ export const loginThunk =
 export const signUpThunk =
     (name: string, email: string, password: string) =>
     async (dispatch: AppDispatch) => {
+        if (process.env.NODE_ENV !== 'production') {
+            dispatch(
+                login({
+                    user: {
+                        id: 'test-uid',
+                        name: 'Test User',
+                        email: email,
+                    },
+                    token: 'test-token',
+                })
+            );
+        }
         const result = await signUp(name, email, password);
         if (result.user) {
             dispatch(
