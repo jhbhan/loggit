@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserProfile } from './types';
+import { User } from 'firebase/auth';
 export const authStorageKey = 'authData';
 export const authTokenKey = 'authToken';
 export const authUserKey = 'authUser';
@@ -30,7 +30,7 @@ export const removeTokenFromStorage = async () => {
     }
 };
 
-export const saveUserToStorage = async (user: UserProfile) => {
+export const saveUserToStorage = async (user: User) => {
     try {
         const userString = JSON.stringify(user);
         await AsyncStorage.setItem(authUserKey, userString);
@@ -39,11 +39,11 @@ export const saveUserToStorage = async (user: UserProfile) => {
     }
 };
 
-export const getUserFromStorage = async (): Promise<UserProfile | null> => {
+export const getUserFromStorage = async (): Promise<User | null> => {
     try {
         const userString = await AsyncStorage.getItem(authUserKey);
         if (userString) {
-            return JSON.parse(userString) as UserProfile;
+            return JSON.parse(userString) as User;
         }
         return null;
     } catch (error) {

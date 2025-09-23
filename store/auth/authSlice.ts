@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-type User = {
-    id: string;
-    name: string;
-    email: string;
-};
+import { User } from 'firebase/auth';
 
 interface AuthState {
     isAuthenticated: boolean;
-    user: null | User;
+    user: User | null;
     token: string | null;
 }
 
