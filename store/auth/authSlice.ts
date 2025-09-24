@@ -4,29 +4,24 @@ import { User } from 'firebase/auth';
 interface AuthState {
     isAuthenticated: boolean;
     user: User | null;
-    token: string | null;
 }
 
 const initialState: AuthState = {
     isAuthenticated: false,
     user: null,
-    token: null,
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<{ user: User; token: string }>) {
+        login(state, action: PayloadAction<User>) {
             state.isAuthenticated = true;
-            state.user = action.payload.user;
-            state.token = action.payload.token;
+            state.user = action.payload;
         },
         logout(state) {
-            console.log('here');
             state.isAuthenticated = false;
             state.user = null;
-            state.token = null;
         },
     },
 });

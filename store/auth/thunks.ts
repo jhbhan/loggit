@@ -5,11 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IdTokenResult } from 'firebase/auth';
 import { AppDispatch } from '../store';
 import { login, logout } from './authSlice';
-import {
-    clearAuthStorage,
-    getTokenFromStorage,
-    getUserFromStorage,
-} from './authStorage';
+import { clearAuthStorage, getUserFromStorage } from './authStorage';
 
 const TEST_USER = {
     email: 'email@example.com',
@@ -46,21 +42,11 @@ const TEST_USER = {
 export const initialLogIn = createAsyncThunk(
     'auth/initialLogIn',
     async (_, { dispatch }) => {
-        const token = await getTokenFromStorage();
-        if (token) {
-            // If token exists, you might want to validate it or fetch user info
-            const user = await getUserFromStorage();
-            if (user) {
-                dispatch(
-                    login({
-                        user: user,
-                        token: token,
-                    })
-                );
-            }
+        const user = await getUserFromStorage();
+        if (user) {
+            await user.getIdToken();
+            dispatch(login(user));
         }
-        // Placeholder for any initial login logic, e.g., checking stored tokens
-        // For now, we assume no user is logged in initially
         return;
     }
 );
@@ -68,22 +54,12 @@ export const initialLogIn = createAsyncThunk(
 export const loginThunk =
     (email: string, password: string) => async (dispatch: AppDispatch) => {
         if (process.env.NODE_ENV !== 'production') {
-            dispatch(
-                login({
-                    user: TEST_USER,
-                    token: 'test-token',
-                })
-            );
+            dispatch(login(TEST_USER));
         }
         const result = await signIn(email, password);
         if (result.user) {
             const token = await result.user.getIdToken();
-            dispatch(
-                login({
-                    user: result.user,
-                    token: token,
-                })
-            );
+            dispatch(login(TEST_USER));
             return;
         }
         return 'Invalid email or password';
@@ -93,22 +69,11 @@ export const signUpThunk =
     (name: string, email: string, password: string) =>
     async (dispatch: AppDispatch) => {
         if (process.env.NODE_ENV !== 'production') {
-            dispatch(
-                login({
-                    user: TEST_USER,
-                    token: 'test-token',
-                })
-            );
+            dispatch(login(TEST_USER));
         }
         const result = await signUp(name, email, password);
         if (result.user) {
-            const token = await result.user.getIdToken();
-            dispatch(
-                login({
-                    user: result.user,
-                    token: token,
-                })
-            );
+            dispatch(login(result.user));
             return;
         }
         return 'Error signing up';
