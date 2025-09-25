@@ -18,6 +18,7 @@ export const getQuestionForId =
             ) || null
         );
     };
+
 export const removeQuestionFromLogThunk =
     (logId: number, questionId: number) => async (dispatch: AppDispatch) => {
         try {

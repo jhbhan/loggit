@@ -3,7 +3,6 @@
 import { signIn, signOutUser, signUp } from '@/util/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IdTokenResult } from 'firebase/auth';
-import { AppDispatch } from '../store';
 import { login, logout } from './authSlice';
 import { clearAuthStorage, getUserFromStorage } from './authStorage';
 
@@ -51,8 +50,12 @@ export const initialLogIn = createAsyncThunk(
     }
 );
 
-export const loginThunk =
-    (email: string, password: string) => async (dispatch: AppDispatch) => {
+export const loginThunk = createAsyncThunk(
+    'auth/login',
+    async (
+        { email, password }: { email: string; password: string },
+        { dispatch }
+    ) => {
         if (process.env.NODE_ENV !== 'production') {
             dispatch(login(TEST_USER));
         }
@@ -63,11 +66,19 @@ export const loginThunk =
             return;
         }
         return 'Invalid email or password';
-    };
+    }
+);
 
-export const signUpThunk =
-    (name: string, email: string, password: string) =>
-    async (dispatch: AppDispatch) => {
+export const signUpThunk = createAsyncThunk(
+    'auth/signUp',
+    async (
+        {
+            name,
+            email,
+            password,
+        }: { name: string; email: string; password: string },
+        { dispatch }
+    ) => {
         if (process.env.NODE_ENV !== 'production') {
             dispatch(login(TEST_USER));
         }
@@ -77,14 +88,18 @@ export const signUpThunk =
             return;
         }
         return 'Error signing up';
-    };
-
-export const logoutThunk = () => async (dispatch: AppDispatch) => {
-    try {
-        await signOutUser();
-        await clearAuthStorage();
-        dispatch(logout());
-    } catch (error) {
-        console.error('Error signing out:', error);
     }
-};
+);
+
+export const logoutThunk = createAsyncThunk(
+    'auth/logout',
+    async (_, { dispatch }) => {
+        try {
+            await signOutUser();
+            await clearAuthStorage();
+            dispatch(logout());
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    }
+);
