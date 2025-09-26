@@ -26,13 +26,12 @@ function LoginScreen() {
 
     const handleSubmit = async () => {
         setLoading(true);
-        const errorMessage =
-            formType === 'login'
-                ? await dispatch(loginThunk(email, password))
-                : await dispatch(signUpThunk(name, email, password));
-
-        if (errorMessage) {
-            setError(errorMessage);
+        try {
+            if (formType === 'login')
+                await dispatch(loginThunk({ email, password }));
+            else await dispatch(signUpThunk({ name, email, password }));
+        } catch (error) {
+            alert('Error during authentication:');
         }
         setLoading(false);
     };

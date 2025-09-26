@@ -9,7 +9,9 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { store, useAppSelector } from '@/store/store';
+import { initialLogIn } from '@/store/auth/thunks';
+import { store, useAppDispatch, useAppSelector } from '@/store/store';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import LoginScreen from './login';
 
@@ -36,6 +38,14 @@ export default function RootLayout() {
 }
 
 const MainAppLayout = () => {
+    const dispatch = useAppDispatch();
+    const [firstLoad, setFirstLoad] = useState(true);
+    useEffect(() => {
+        if (firstLoad) {
+            dispatch(initialLogIn()).finally(() => setFirstLoad(false));
+        }
+    }, [firstLoad]);
+
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
     );
