@@ -6,8 +6,8 @@ import {
     updateProfile,
     User,
     UserCredential,
-} from "firebase/auth";
-import { auth } from "./firebase";
+} from 'firebase/auth';
+import { auth } from './firebase';
 
 // Authentication utility functions
 
@@ -35,7 +35,7 @@ export const signUp = async (
 
         return userCredential;
     } catch (error) {
-        console.error("Error signing up:", error);
+        console.error('Error signing up:', error);
         throw error;
     }
 };
@@ -50,7 +50,7 @@ export const signIn = async (
     try {
         return await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        console.error("Error signing in:", error);
+        console.error('Error signing in:', error);
         throw error;
     }
 };
@@ -62,7 +62,7 @@ export const signOutUser = async (): Promise<void> => {
     try {
         await signOut(auth);
     } catch (error) {
-        console.error("Error signing out:", error);
+        console.error('Error signing out:', error);
         throw error;
     }
 };
@@ -74,7 +74,7 @@ export const resetPassword = async (email: string): Promise<void> => {
     try {
         await sendPasswordResetEmail(auth, email);
     } catch (error) {
-        console.error("Error sending password reset email:", error);
+        console.error('Error sending password reset email:', error);
         throw error;
     }
 };
@@ -90,10 +90,10 @@ export const updateUserProfile = async (updates: {
         if (auth.currentUser) {
             await updateProfile(auth.currentUser, updates);
         } else {
-            throw new Error("No user is currently signed in");
+            throw new Error('No user is currently signed in');
         }
     } catch (error) {
-        console.error("Error updating user profile:", error);
+        console.error('Error updating user profile:', error);
         throw error;
     }
 };

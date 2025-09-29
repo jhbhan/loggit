@@ -50,12 +50,18 @@ export const initialLogIn = createAsyncThunk(
     }
 );
 
+type LoginParams = {
+    email: string;
+    password: string;
+};
+
+type SignUpParams = LoginParams & {
+    name: string;
+};
+
 export const loginThunk = createAsyncThunk(
     'auth/login',
-    async (
-        { email, password }: { email: string; password: string },
-        { dispatch }
-    ) => {
+    async ({ email, password }: LoginParams, { dispatch }) => {
         if (process.env.NODE_ENV !== 'production') {
             dispatch(login(TEST_USER));
         }
@@ -71,14 +77,7 @@ export const loginThunk = createAsyncThunk(
 
 export const signUpThunk = createAsyncThunk(
     'auth/signUp',
-    async (
-        {
-            name,
-            email,
-            password,
-        }: { name: string; email: string; password: string },
-        { dispatch }
-    ) => {
+    async ({ name, email, password }: SignUpParams, { dispatch }) => {
         if (process.env.NODE_ENV !== 'production') {
             dispatch(login(TEST_USER));
         }
